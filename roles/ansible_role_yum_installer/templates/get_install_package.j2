@@ -1,0 +1,9 @@
+{%- set conditional_output = [] -%}
+{% for result in yum_installer_out.results %}
+{% if result.changed %}
+{% if conditional_output.append({result.item: {'status': 'package installed', 'changed': true, 'rc': 0}}) %}{% endif %}
+{% else %}
+{% if conditional_output.append({result.item: {'status': 'package not installed', 'changed': false, 'rc': 3001}}) %}{% endif %}
+{% endif %}
+{% endfor %}
+{{ conditional_output }}

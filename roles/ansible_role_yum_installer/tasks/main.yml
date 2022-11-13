@@ -1,0 +1,4 @@
+---
+# tasks file for ansible_role_yum_installer
+- name: "Run {{ exec_play }}"
+  include_tasks: "{{ exec_play }}"

@@ -1,0 +1,5 @@
+---
+# defaults file for ansible_role_yum_installer
+YUM_PACKAGE_NAMES: []
+dest_path: '/var/www/html/'
+_handler: ""

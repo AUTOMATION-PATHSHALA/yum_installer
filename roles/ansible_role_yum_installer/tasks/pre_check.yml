@@ -1,0 +1,15 @@
+---
+- name: Validate input parameters
+  assert:
+    that: >-
+      {%- set conditions = [] -%}
+      {%- set output = conditions.append('YUM_PACKAGE_NAMES is defined and (YUM_PACKAGE_NAMES | type_debug == "list") and  YUM_PACKAGE_NAMES | length > 0' ) -%}
+      {{ conditions }}
+    fail_msg: >-
+      {%- if YUM_PACKAGE_NAMES is not defined -%}
+        Missing YUM_PACKAGE_NAMES varaible. Make sure that the YUM_PACKAGE_NAMES varaible must be defined.
+      {%- elif (YUM_PACKAGE_NAMES | type_debug != "list") -%}
+        YUM_PACKAGE_NAMES data type must be list
+      {%- elif  YUM_PACKAGE_NAMES | length == 0 -%}
+        YUM_PACKAGE_NAMES contains some package name
+      {%- endif -%}

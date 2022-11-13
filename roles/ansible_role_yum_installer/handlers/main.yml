@@ -1,0 +1,13 @@
+---
+# handlers file for ansible_role_yum_installer
+- name: start httpd service
+  service:
+    name: "httpd"
+    enabled: true
+    state: started
+
+- name: start firewalld service
+  service:
+     name: "firewalld"
+     enabled: true
+     state: started

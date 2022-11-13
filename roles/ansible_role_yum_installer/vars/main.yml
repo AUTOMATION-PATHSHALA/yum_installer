@@ -1,0 +1,3 @@
+---
+# vars file for ansible_role_yum_installer
+YUM_PACKAGE_NAMES: ['httpd','firewalld']

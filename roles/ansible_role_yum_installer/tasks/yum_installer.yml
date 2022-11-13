@@ -1,0 +1,44 @@
+---
+
+- name: Yum installer Block
+  block:
+
+  - name: Install {{ YUM_PACKAGE_NAMES }} package
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ YUM_PACKAGE_NAMES }}"
+    register: yum_installer_out
+  
+  - debug: var=yum_installer_out
+
+  - name: Get package installed results
+    set_fact:
+      get_installed_packages: "{{ lookup('template', 'get_install_package.j2') }}"
+
+  - name: copy index file to web folder location
+    copy:
+      src: "files/index.html"
+      dest: "{{ dest_path }}"
+  
+  - name: forcely fail playbook
+    command: "falsess"
+    ignore_errors: yes
+#  - name: start firewalld & httpd services
+#    command: echo "Take it from here to start {{ item }} service"
+#    notify: "start {{ item }} service"
+#    loop: "{{ YUM_PACKAGE_NAMES }}"
+
+#  - debug: var=_handler
+
+  - debug: var=get_installed_packages
+
+
+  rescue:
+
+    - debug:
+        msg: "Rescue section executed"
+
+    - name: hard stop play
+      meta: end_play
+
